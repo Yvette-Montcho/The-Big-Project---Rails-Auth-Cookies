@@ -1,0 +1,52 @@
+<%# app/views/posts/show.html.erb — Page de détail d'un potin %>
+<%# Affiche le potin complet avec toutes ses informations %>
+
+<%# Titre de l'onglet avec le titre du potin %>
+<% content_for :title, "#{@post.title} — The Big Project" %>
+
+<div class="row justify-content-center">
+  <div class="col-md-8">
+
+    <%# Carte principale contenant le potin complet %>
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+
+        <%# Titre du potin en grand %>
+        <h1 class="card-title h2"><%= @post.title %></h1>
+
+        <%# Informations de publication : auteur et date %>
+        <div class="text-muted mb-3 pb-3 border-bottom">
+          <span>Par </span>
+          <%# Lien vers le profil de l'auteur du potin %>
+          <%= link_to @post.user.name, user_path(@post.user), class: "fw-semibold text-decoration-none text-dark" %>
+          <span> · </span>
+          <%# Date de publication au format français %>
+          <span><%= @post.created_at.strftime("%d/%m/%Y à %H:%M") %></span>
+        </div>
+
+        <%# Contenu complet du potin — simple_format gère les retours à la ligne %>
+        <div class="card-text">
+          <%= simple_format(@post.content) %>
+        </div>
+
+        <%# Bouton de suppression visible uniquement pour l'auteur du potin %>
+        <% if logged_in? && current_user == @post.user %>
+          <div class="mt-4 pt-3 border-top">
+            <%# Bouton de suppression avec dialog de confirmation %>
+            <%= button_to "🗑️ Supprimer ce potin", post_path(@post),
+                method: :delete,
+                data: { turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce potin ?" },
+                class: "btn btn-outline-danger btn-sm" %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+
+    <%# Lien de retour vers la liste des potins %>
+    <div class="mt-3">
+      <%= link_to "← Retour aux potins", posts_path, class: "text-decoration-none text-muted" %>
+    </div>
+
+  </div>
+</div>

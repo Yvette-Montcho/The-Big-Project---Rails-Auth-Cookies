@@ -1,0 +1,76 @@
+<%# app/views/sessions/new.html.erb — Formulaire de connexion (login) %>
+<%# Cette vue affiche le formulaire permettant à un utilisateur de se connecter %>
+
+<%# Définit le titre de l'onglet pour cette page spécifique %>
+<% content_for :title, "Connexion — The Big Project" %>
+
+<%# Centrage du formulaire sur la page avec Bootstrap %>
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+
+    <%# Carte Bootstrap contenant le formulaire de connexion %>
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+
+        <%# Titre du formulaire %>
+        <h2 class="card-title text-center mb-4">🔐 Connexion</h2>
+
+        <%# form_with crée un formulaire HTML avec protection CSRF automatique %>
+        <%# url: login_path cible la route POST /login %>
+        <%# scope: :session regroupe les champs sous params[:session] %>
+        <%= form_with url: login_path, scope: :session, local: true do |f| %>
+
+          <%# ---- Champ Email ---- %>
+          <div class="mb-3">
+            <%# Label associé au champ email pour l'accessibilité %>
+            <%= f.label :email, "Adresse email", class: "form-label fw-semibold" %>
+
+            <%# Champ de saisie de l'email — type email active la validation du navigateur %>
+            <%= f.email_field :email,
+                class: "form-control",
+                placeholder: "votre@email.com",
+                autocomplete: "email",
+                required: true %>
+          </div>
+
+          <%# ---- Champ Mot de passe ---- %>
+          <div class="mb-3">
+            <%= f.label :password, "Mot de passe", class: "form-label fw-semibold" %>
+
+            <%# Champ de saisie du mot de passe — type password masque la saisie %>
+            <%= f.password_field :password,
+                class: "form-control",
+                placeholder: "••••••••",
+                autocomplete: "current-password",
+                required: true %>
+          </div>
+
+          <%# ---- Checkbox "Se souvenir de moi" ---- %>
+          <%# Si cochée, des cookies permanents seront créés (valables 20 ans) %>
+          <%# Si non cochée, seule une session temporaire sera créée %>
+          <div class="mb-3 form-check">
+            <%# check_box crée une checkbox qui envoie "1" si cochée, "0" sinon %>
+            <%= f.check_box :remember_me, { class: "form-check-input", id: "remember_me" }, "1", "0" %>
+            <%= f.label :remember_me, "Se souvenir de moi 🍪", class: "form-check-label" %>
+          </div>
+
+          <%# ---- Bouton de soumission ---- %>
+          <div class="d-grid">
+            <%# submit_tag génère un bouton de type submit pour envoyer le formulaire %>
+            <%= f.submit "Se connecter", class: "btn btn-dark btn-lg" %>
+          </div>
+
+        <% end %>
+
+        <%# Lien vers la page d'inscription pour les nouveaux utilisateurs %>
+        <hr>
+        <p class="text-center mb-0">
+          Pas encore de compte ?
+          <%= link_to "S'inscrire", new_user_path, class: "text-decoration-none fw-bold" %>
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+</div>

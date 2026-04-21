@@ -1,0 +1,61 @@
+// app/assets/stylesheets/application.scss — Feuille de style principale de l'application
+// Ce fichier importe Bootstrap et ajoute des styles personnalisés
+
+// Import de Bootstrap 5 — fournit tous les composants CSS (cards, boutons, grille, etc.)
+@import "bootstrap";
+
+// ============================================================
+// Styles globaux de l'application
+// ============================================================
+
+// Assure que le footer reste en bas de page même si le contenu est court
+body {
+  // Utilise le modèle flexbox pour le layout vertical de la page
+  display: flex;
+  // Organise les éléments en colonne (navbar > contenu > footer)
+  flex-direction: column;
+  // La page occupe au moins toute la hauteur de la fenêtre
+  min-height: 100vh;
+  // Couleur de fond légèrement grisée pour plus de confort visuel
+  background-color: #f8f9fa;
+}
+
+// Le contenu principal prend tout l'espace disponible entre navbar et footer
+main {
+  // flex: 1 fait grandir cet élément pour occuper l'espace restant
+  flex: 1;
+}
+
+// ============================================================
+// Styles de la barre de navigation
+// ============================================================
+
+// Ajoute une ombre subtile sous la navbar pour la démarquer du contenu
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+// ============================================================
+// Styles des cartes (cards Bootstrap)
+// ============================================================
+
+// Transition douce au survol des cartes pour un effet interactif
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none; // Supprime la bordure par défaut de Bootstrap
+}
+
+// Effet de légère élévation au survol d'une carte
+.card:hover {
+  transform: translateY(-2px); // Remonte légèrement la carte
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important; // Ombre plus prononcée
+}
+
+// ============================================================
+// Styles du footer
+// ============================================================
+
+// Le footer est toujours attaché au bas de la page
+footer {
+  margin-top: auto; // Pousse le footer vers le bas avec flexbox
+}

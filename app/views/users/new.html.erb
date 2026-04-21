@@ -1,0 +1,107 @@
+<%# app/views/users/new.html.erb — Formulaire d'inscription (signup) %>
+<%# Cette vue affiche le formulaire permettant à un visiteur de créer un compte %>
+
+<%# Définit le titre de l'onglet pour cette page spécifique %>
+<% content_for :title, "Inscription — The Big Project" %>
+
+<%# Centrage du formulaire sur la page avec Bootstrap %>
+<div class="row justify-content-center">
+  <div class="col-md-7 col-lg-6">
+
+    <%# Carte Bootstrap contenant le formulaire d'inscription %>
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+
+        <%# Titre du formulaire %>
+        <h2 class="card-title text-center mb-4">📝 Créer un compte</h2>
+
+        <%# form_with(model: @user) crée un formulaire lié au modèle User %>
+        <%# Rails génère automatiquement l'action POST /users %>
+        <%= form_with model: @user, local: true do |f| %>
+
+          <%# Affiche les erreurs de validation si le formulaire est resoumis avec des erreurs %>
+          <% if @user.errors.any? %>
+            <div class="alert alert-danger">
+              <strong><%= pluralize(@user.errors.count, "erreur") %> :</strong>
+              <ul class="mb-0 mt-2">
+                <%# Affiche chaque message d'erreur de validation %>
+                <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <%# ---- Champ Nom ---- %>
+          <div class="mb-3">
+            <%= f.label :name, "Nom complet", class: "form-label fw-semibold" %>
+            <%# Champ texte pour le nom de l'utilisateur %>
+            <%= f.text_field :name,
+                class: "form-control",
+                placeholder: "Jean Dupont",
+                autocomplete: "name",
+                required: true %>
+          </div>
+
+          <%# ---- Champ Email ---- %>
+          <div class="mb-3">
+            <%= f.label :email, "Adresse email", class: "form-label fw-semibold" %>
+            <%# Champ email — le navigateur valide le format automatiquement %>
+            <%= f.email_field :email,
+                class: "form-control",
+                placeholder: "votre@email.com",
+                autocomplete: "email",
+                required: true %>
+          </div>
+
+          <%# ---- Champ Mot de passe ---- %>
+          <div class="mb-3">
+            <%= f.label :password, "Mot de passe (6 caractères min.)", class: "form-label fw-semibold" %>
+            <%# Champ mot de passe — masqué à la saisie %>
+            <%= f.password_field :password,
+                class: "form-control",
+                placeholder: "••••••••",
+                autocomplete: "new-password",
+                minlength: 6,
+                required: true %>
+          </div>
+
+          <%# ---- Champ Confirmation du mot de passe ---- %>
+          <div class="mb-3">
+            <%= f.label :password_confirmation, "Confirmer le mot de passe", class: "form-label fw-semibold" %>
+            <%# Ce champ doit correspondre exactement au champ mot de passe %>
+            <%= f.password_field :password_confirmation,
+                class: "form-control",
+                placeholder: "••••••••",
+                autocomplete: "new-password",
+                required: true %>
+          </div>
+
+          <%# ---- Checkbox "Se souvenir de moi" à l'inscription ---- %>
+          <%# Permet de créer des cookies dès l'inscription pour rester connecté %>
+          <div class="mb-3 form-check">
+            <%# La checkbox envoie "1" si cochée dans params[:user][:remember_me] %>
+            <%= f.check_box :remember_me, { class: "form-check-input" }, "1", "0" %>
+            <%= f.label :remember_me, "Se souvenir de moi 🍪", class: "form-check-label" %>
+          </div>
+
+          <%# ---- Bouton de soumission ---- %>
+          <div class="d-grid">
+            <%# Soumet le formulaire et déclenche l'action create du UsersController %>
+            <%= f.submit "Créer mon compte", class: "btn btn-dark btn-lg" %>
+          </div>
+
+        <% end %>
+
+        <%# Lien vers la page de connexion pour les utilisateurs existants %>
+        <hr>
+        <p class="text-center mb-0">
+          Déjà un compte ?
+          <%= link_to "Se connecter", login_path, class: "text-decoration-none fw-bold" %>
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+</div>

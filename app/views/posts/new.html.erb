@@ -1,0 +1,71 @@
+<%# app/views/posts/new.html.erb — Formulaire de création d'un potin %>
+<%# Accessible uniquement aux utilisateurs connectés (before_action :require_login) %>
+
+<%# Titre de l'onglet pour cette page %>
+<% content_for :title, "Nouveau Potin — The Big Project" %>
+
+<div class="row justify-content-center">
+  <div class="col-md-8">
+
+    <%# Carte contenant le formulaire de création de potin %>
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+
+        <%# Titre du formulaire %>
+        <h2 class="card-title mb-4">✍️ Publier un Potin</h2>
+
+        <%# Formulaire lié au modèle @post — génère une requête POST /posts %>
+        <%= form_with model: @post, local: true do |f| %>
+
+          <%# Affiche les erreurs de validation si présentes %>
+          <% if @post.errors.any? %>
+            <div class="alert alert-danger">
+              <ul class="mb-0">
+                <%# Liste chaque message d'erreur de validation du modèle Post %>
+                <% @post.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <%# ---- Champ Titre du potin ---- %>
+          <div class="mb-3">
+            <%= f.label :title, "Titre du potin", class: "form-label fw-semibold" %>
+            <%# Champ texte pour le titre — minlength correspond à la validation du modèle %>
+            <%= f.text_field :title,
+                class: "form-control",
+                placeholder: "Un titre accrocheur...",
+                minlength: 3,
+                required: true %>
+          </div>
+
+          <%# ---- Champ Contenu du potin ---- %>
+          <div class="mb-3">
+            <%= f.label :content, "Contenu du potin", class: "form-label fw-semibold" %>
+            <%# Zone de texte multiligne pour le contenu du potin %>
+            <%# rows: 6 définit la hauteur initiale de la zone de saisie %>
+            <%= f.text_area :content,
+                class: "form-control",
+                placeholder: "Raconte le potin en détail...",
+                rows: 6,
+                minlength: 10,
+                required: true %>
+          </div>
+
+          <%# ---- Boutons d'action ---- %>
+          <div class="d-flex gap-2">
+            <%# Bouton de soumission du formulaire %>
+            <%= f.submit "Publier le potin 🗞️", class: "btn btn-dark" %>
+
+            <%# Lien d'annulation — retourne à la liste sans créer de potin %>
+            <%= link_to "Annuler", posts_path, class: "btn btn-outline-secondary" %>
+          </div>
+
+        <% end %>
+
+      </div>
+    </div>
+
+  </div>
+</div>

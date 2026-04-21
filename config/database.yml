@@ -1,0 +1,59 @@
+# config/database.yml — Configuration de la base de données pour chaque environnement
+# Rails utilise trois environnements : development, test, et production
+
+# ============================================================
+# Configuration par défaut partagée par tous les environnements
+# Les valeurs ici peuvent être surchargées dans chaque section
+# ============================================================
+default: &default
+  # Adapter SQLite3 pour le développement et les tests locaux
+  # Plus simple à utiliser : pas d'installation ni de serveur nécessaire
+  adapter: sqlite3
+
+  # Taille du pool de connexions : nombre max de connexions simultanées
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+  # Délai d'attente en millisecondes avant erreur de connexion
+  timeout: 5000
+
+# ============================================================
+# Environnement DEVELOPMENT — Base de données locale de développement
+# Utilisée quand on lance 'rails server' sur son ordinateur
+# ============================================================
+development:
+  # Hérite de la configuration par défaut ci-dessus
+  <<: *default
+
+  # Chemin vers le fichier SQLite3 de développement
+  # Ce fichier est dans le dossier db/ et est ignoré par git (.gitignore)
+  database: db/development.sqlite3
+
+# ============================================================
+# Environnement TEST — Base de données pour les tests automatisés
+# Recréée proprement avant chaque suite de tests
+# ============================================================
+test:
+  # Hérite de la configuration par défaut
+  <<: *default
+
+  # Fichier SQLite3 séparé pour les tests — jamais pollué par les données de développement
+  database: db/test.sqlite3
+
+# ============================================================
+# Environnement PRODUCTION — Base de données Heroku (PostgreSQL)
+# Heroku fournit automatiquement la variable DATABASE_URL
+# Ne jamais commiter des identifiants de production ici !
+# ============================================================
+production:
+  # Adapter PostgreSQL requis par Heroku
+  adapter: postgresql
+
+  # Encodage UTF-8 pour supporter tous les caractères
+  encoding: unicode
+
+  # Taille du pool de connexions configurable via variable d'environnement
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+  # URL complète de connexion fournie automatiquement par Heroku
+  # Format : postgres://user:password@host:port/database_name
+  url: <%= ENV['DATABASE_URL'] %>

@@ -1,0 +1,118 @@
+<%# app/views/layouts/application.html.erb — Layout principal de l'application %>
+<%# Ce template HTML est partagé par toutes les pages du site %>
+<%# Le contenu spécifique à chaque page est injecté via yield %>
+
+<!DOCTYPE html>
+<%# Définit la langue de la page en français pour l'accessibilité %>
+<html lang="fr">
+  <head>
+    <%# Titre de l'onglet du navigateur — content_for(:title) permet aux vues de personnaliser le titre %>
+    <title><%= content_for?(:title) ? yield(:title) : "The Big Project - Potins" %></title>
+
+    <%# Métadonnées obligatoires pour l'encodage et le responsive design mobile %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%# Token CSRF : sécurise les formulaires contre les attaques Cross-Site Request Forgery %>
+    <%= csrf_meta_tags %>
+
+    <%# Balise pour la politique de sécurité du contenu (Content Security Policy) %>
+    <%= csp_meta_tag %>
+
+    <%# Charge les feuilles de style CSS (Bootstrap + styles personnalisés via Sprockets) %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <%# Charge les modules JavaScript via importmap %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <%# ============================================================ %>
+    <%# BARRE DE NAVIGATION — affichée sur toutes les pages %>
+    <%# ============================================================ %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <%# Logo / Nom du site — lien vers la page d'accueil %>
+        <%= link_to "🗞️ The Big Project", root_path, class: "navbar-brand fw-bold" %>
+
+        <%# Bouton hamburger pour mobile (Bootstrap) %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <%# Liens de navigation regroupés %>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <%# Lien vers la liste des potins %>
+            <li class="nav-item">
+              <%= link_to "Potins", posts_path, class: "nav-link" %>
+            </li>
+
+            <%# Affiche les liens différents selon si l'utilisateur est connecté ou non %>
+            <% if logged_in? %>
+              <%# Lien vers le profil de l'utilisateur connecté %>
+              <li class="nav-item">
+                <%= link_to "Mon Profil", user_path(current_user), class: "nav-link" %>
+              </li>
+
+              <%# Lien pour publier un nouveau potin %>
+              <li class="nav-item">
+                <%= link_to "Nouveau Potin", new_post_path, class: "nav-link" %>
+              </li>
+
+              <%# Lien de déconnexion — utilise la méthode HTTP DELETE via data-turbo-method %>
+              <li class="nav-item">
+                <%= link_to "Déconnexion", logout_path, data: { turbo_method: :delete }, class: "nav-link text-warning" %>
+              </li>
+            <% else %>
+              <%# Lien vers le formulaire de connexion %>
+              <li class="nav-item">
+                <%= link_to "Connexion", login_path, class: "nav-link" %>
+              </li>
+
+              <%# Lien vers le formulaire d'inscription %>
+              <li class="nav-item">
+                <%= link_to "Inscription", new_user_path, class: "nav-link btn btn-outline-light btn-sm ms-2" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <%# ============================================================ %>
+    <%# MESSAGES FLASH — notifications de succès et d'erreur %>
+    <%# ============================================================ %>
+    <div class="container mt-3">
+      <%# Message de succès (notice) — fond vert %>
+      <% if flash[:notice] %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <%= flash[:notice] %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% end %>
+
+      <%# Message d'alerte/erreur (alert) — fond rouge %>
+      <% if flash[:alert] %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <%= flash[:alert] %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% end %>
+    </div>
+
+    <%# ============================================================ %>
+    <%# CONTENU PRINCIPAL — chaque vue est injectée ici via yield %>
+    <%# ============================================================ %>
+    <main class="container mt-4">
+      <%= yield %>
+    </main>
+
+    <%# ============================================================ %>
+    <%# FOOTER — pied de page de l'application %>
+    <%# ============================================================ %>
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+      <p class="mb-0">🍪 The Big Project — Formation Rails ETP4A — <%= Time.now.year %></p>
+    </footer>
+  </body>
+</html>

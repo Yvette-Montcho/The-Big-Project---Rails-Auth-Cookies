@@ -1,0 +1,82 @@
+<%# app/views/users/show.html.erb — Page de profil d'un utilisateur %>
+<%# Affiche les informations du profil et la liste des potins de l'utilisateur %>
+
+<%# Titre de l'onglet avec le nom de l'utilisateur affiché %>
+<% content_for :title, "Profil de #{@user.name} — The Big Project" %>
+
+<div class="row">
+  <%# ---- Colonne de gauche : informations du profil ---- %>
+  <div class="col-md-4">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body text-center">
+        <%# Avatar généré automatiquement avec les initiales de l'utilisateur %>
+        <div class="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center mx-auto mb-3"
+             style="width: 80px; height: 80px; font-size: 2rem;">
+          <%# Affiche la première lettre du nom en majuscule %>
+          <%= @user.name.first.upcase %>
+        </div>
+
+        <%# Nom complet de l'utilisateur %>
+        <h4 class="card-title"><%= @user.name %></h4>
+
+        <%# Email de l'utilisateur %>
+        <p class="text-muted"><%= @user.email %></p>
+
+        <%# Nombre total de potins publiés par cet utilisateur %>
+        <span class="badge bg-dark">
+          <%= pluralize(@user.posts.count, "potin") %>
+        </span>
+
+        <%# Date d'inscription affichée en format français %>
+        <p class="text-muted small mt-2">
+          Membre depuis <%= @user.created_at.strftime("%B %Y") %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <%# ---- Colonne de droite : liste des potins de l'utilisateur ---- %>
+  <div class="col-md-8">
+    <h3 class="mb-3">📰 Potins de <%= @user.name %></h3>
+
+    <%# Vérifie si l'utilisateur a publié des potins %>
+    <% if @posts.empty? %>
+      <%# Message affiché si l'utilisateur n'a encore aucun potin %>
+      <div class="alert alert-info">
+        <%= @user.name %> n'a pas encore publié de potins.
+      </div>
+    <% else %>
+      <%# Boucle sur chaque potin de l'utilisateur pour les afficher %>
+      <% @posts.each do |post| %>
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body">
+            <%# Titre du potin avec lien vers sa page détaillée %>
+            <h5 class="card-title">
+              <%= link_to post.title, post_path(post), class: "text-decoration-none text-dark" %>
+            </h5>
+
+            <%# Extrait du contenu (limité à 150 caractères pour la lisibilité) %>
+            <p class="card-text text-muted">
+              <%= truncate(post.content, length: 150) %>
+            </p>
+
+            <%# Date de publication formatée %>
+            <small class="text-muted">
+              Publié le <%= post.created_at.strftime("%d/%m/%Y à %H:%M") %>
+            </small>
+
+            <%# Bouton de suppression visible uniquement pour l'auteur du post %>
+            <% if current_user == @user %>
+              <%# Bouton de suppression avec confirmation JavaScript avant suppression %>
+              <%= button_to "Supprimer", post_path(post),
+                  method: :delete,
+                  data: { turbo_confirm: "Supprimer ce potin définitivement ?" },
+                  class: "btn btn-sm btn-outline-danger float-end" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+  </div>
+</div>
