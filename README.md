@@ -21,7 +21,7 @@
 
 ## 📖 Présentation du projet
 
-**The Big Project** est une application web de partage de potins développée avec Ruby on Rails dans le cadre de la formation **ETP4A — Semaine 6, Jour 5**.
+**The Big Project** est une application web de partage de potins développée avec Ruby on Rails dans le cadre de la formation **ETP4A - Semaine 6, Jour 5**.
 
 Ce projet est l'aboutissement d'une semaine de développement Rails. Il illustre les concepts fondamentaux de :
 - L'authentification sécurisée avec BCrypt
@@ -42,7 +42,7 @@ Ce projet est l'aboutissement d'une semaine de développement Rails. Il illustre
 | 🔓 Déconnexion | Suppression des sessions ET des cookies + invalidation du digest en base |
 | 🗞️ Potins | Publier, consulter et supprimer des potins |
 | 👤 Profil | Page de profil avec la liste des potins d'un utilisateur |
-| 🛡️ Protection | Routes protégées — création/suppression réservées aux utilisateurs connectés |
+| 🛡️ Protection | Routes protégées - création/suppression réservées aux utilisateurs connectés |
 
 ---
 
@@ -51,10 +51,10 @@ Ce projet est l'aboutissement d'une semaine de développement Rails. Il illustre
 - **Ruby** 3.2.2
 - **Rails** 7.1
 - **SQLite3** (développement) / **PostgreSQL** (production Heroku)
-- **BCrypt** — hachage sécurisé des mots de passe et tokens
-- **Bootstrap 5** — framework CSS responsive
-- **Puma** — serveur web
-- **Heroku** — plateforme de déploiement (PaaS)
+- **BCrypt** - hachage sécurisé des mots de passe et tokens
+- **Bootstrap 5** - framework CSS responsive
+- **Puma** - serveur web
+- **Heroku** - plateforme de déploiement (PaaS)
 
 ---
 
@@ -62,11 +62,11 @@ Ce projet est l'aboutissement d'une semaine de développement Rails. Il illustre
 
 Avant de lancer le projet, assurez-vous d'avoir installé :
 
-- **Ruby** ≥ 3.2 — [Télécharger Ruby](https://www.ruby-lang.org/fr/downloads/)
-- **Rails** ≥ 7.1 — `gem install rails`
-- **Bundler** — `gem install bundler`
-- **Git** — [Télécharger Git](https://git-scm.com/)
-- **VS Code** — [Télécharger VS Code](https://code.visualstudio.com/)
+- **Ruby** ≥ 3.2 - [Télécharger Ruby](https://www.ruby-lang.org/fr/downloads/)
+- **Rails** ≥ 7.1 - `gem install rails`
+- **Bundler** - `gem install bundler`
+- **Git** - [Télécharger Git](https://git-scm.com/)
+- **VS Code** - [Télécharger VS Code](https://code.visualstudio.com/)
 
 > **Windows** : Utilisez [RubyInstaller](https://rubyinstaller.org/) pour installer Ruby facilement.
 
@@ -74,7 +74,7 @@ Avant de lancer le projet, assurez-vous d'avoir installé :
 
 ## 🚀 Installation et exécution avec VS Code
 
-### Étape 1 — Cloner le repository
+### Étape 1 - Cloner le repository
 
 Ouvrez un terminal dans VS Code (`Ctrl+`` ` ou **Terminal > Nouveau terminal**) :
 
@@ -83,7 +83,7 @@ git clone https://github.com/VOTRE_USERNAME/rails-big-project-auth-cookies.git
 cd rails-big-project-auth-cookies
 ```
 
-### Étape 2 — Installer les dépendances Ruby (gems)
+### Étape 2 - Installer les dépendances Ruby (gems)
 
 ```bash
 # Installe toutes les gems du Gemfile SAUF celles de production (pg)
@@ -91,27 +91,27 @@ cd rails-big-project-auth-cookies
 bundle install --without production
 ```
 
-### Étape 3 — Créer et migrer la base de données
+### Étape 3 - Créer et migrer la base de données
 
 ```bash
 # Crée le fichier SQLite3 et applique toutes les migrations
 rails db:create db:migrate
 ```
 
-### Étape 4 — (Optionnel) Peupler la base avec des données de test
+### Étape 4 - (Optionnel) Peupler la base avec des données de test
 
 ```bash
 # Crée 3 utilisateurs et 4 potins de démonstration
 rails db:seed
 ```
 
-### Étape 5 — Lancer le serveur Rails
+### Étape 5 - Lancer le serveur Rails
 
 ```bash
 rails server
 ```
 
-### Étape 6 — Ouvrir l'application dans le navigateur
+### Étape 6 - Ouvrir l'application dans le navigateur
 
 Rendez-vous sur : **[http://localhost:3000](http://localhost:3000)**
 
@@ -280,17 +280,11 @@ Ce nom est :
 - ✅ Court et mémorable
 - ✅ Reflète fidèlement le contenu du projet
 
----
 
-## 👨‍💻 Auteur
-
-Projet réalisé dans le cadre de la formation **ETP4A — Semaine 6, Jour 5**
-
----
 
 ## 📚 Ressources utiles
 
 - [Documentation officielle Rails](https://guides.rubyonrails.org/)
-- [Heroku — Getting Started with Rails](https://devcenter.heroku.com/articles/getting-started-with-rails7)
-- [The Odin Project — Sessions & Cookies](https://www.theodinproject.com/)
-- [Grafikart — Sessions et Cookies](https://grafikart.fr/)
+- [Heroku - Getting Started with Rails](https://devcenter.heroku.com/articles/getting-started-with-rails7)
+- [The Odin Project - Sessions & Cookies](https://www.theodinproject.com/)
+- [Grafikart - Sessions et Cookies](https://grafikart.fr/)
